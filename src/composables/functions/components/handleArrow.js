@@ -16,8 +16,8 @@ function handleArrow(array_variables) {
       array_variables.numberOfClicks.value = 0;
 
       // animation
-      array_variables.carousel_component.value.$refs.movie_carossel.classList.add(
-        "movie-carossel-active"
+      array_variables.carousel_component.value.$refs.movie_carousel.classList.add(
+        "movie-carousel-active"
       );
     }, 750);
   } else {
@@ -38,8 +38,8 @@ function handleArrow(array_variables) {
       }
       array_variables.numberOfClicks.value = 0;
       // animation
-      array_variables.carousel_component.value.$refs.movie_carossel.classList.add(
-        "movie-carossel-active"
+      array_variables.carousel_component.value.$refs.movie_carousel.classList.add(
+        "movie-carousel-active"
       );
     }, 750);
   }
