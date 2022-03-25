@@ -1,30 +1,114 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="main" @click="handleApp" ref="app">
+    <Navbar
+      :searchActive="searchActive"
+      :searchDropwdownActive="searchDropwdownActive"
+      @toggle-true="toggleSearchResults"
+      @toggle-false="toggleSearchResults"
+      @search-dropdown-active="searchDropdownActive"
+    />
+    <SearchDropdown
+      :active="searchDropwdownActive"
+      @search-dropdown-inactive="searchDropdownInactive"
+      @search-dropdown-active="searchDropdownActive"
+    />
+    <Suspense>
+      <!-- Main Content -->
+      <template #default>
+        <router-view></router-view>
+      </template>
+
+      <!-- loading state -->
+      <template #fallback> {{ msgError }} </template>
+    </Suspense>
   </div>
-  <router-view />
 </template>
 
+<script setup>
+import { ref } from "@vue/reactivity";
+import { onErrorCaptured } from "@vue/runtime-core";
+import Navbar from "./components/global/Navbar.vue";
+import SearchDropdown from "./components/global/SearchDropdown.vue";
+
+// template refs
+const app = ref(null);
+// data
+const searchActive = ref(false);
+const searchDropwdownActive = ref(false);
+const msgError = ref("");
+
+// methods
+const handleApp = (e) => {
+  if (e.target.className.indexOf("result-not-found") > -1) {
+    return -1;
+  }
+
+  if (document.querySelector(".seach__list-top")) {
+    if (
+      !e.target.closest(".search") ||
+      e.target.closest(".movies-list") ||
+      e.target.closest(".tv-shows-list")
+    ) {
+      searchActive.value = false;
+    }
+  }
+  if (document.querySelector(".search-dropdown-results")) {
+    if (e.target.closest(".search-dropdown-results")) {
+      searchDropdownInactive();
+    }
+  }
+};
+
+const toggleSearchResults = (toggle) => {
+  searchActive.value = toggle;
+};
+
+const searchDropdownActive = () => {
+  searchDropwdownActive.value = true;
+};
+const searchDropdownInactive = () => {
+  searchDropwdownActive.value = false;
+};
+
+onErrorCaptured(() => {
+  msgError.value = "Something went wrong!";
+});
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-#nav {
-  padding: 30px;
+html {
+  font-size: 1rem;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+body {
+  background-color: rgba(14, 15, 15, 0.918);
+  color: white;
+  overflow-x: hidden;
+  font-family: "Source-Sans-Pro", Arial, Helvetica, sans-serif;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+a {
+  text-decoration: none;
+  color: black;
+}
+
+li {
+  list-style: none;
+}
+
+img {
+  user-select: none;
+}
+
+.main {
+  position: relative;
 }
 </style>
