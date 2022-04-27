@@ -16,7 +16,7 @@
 <script setup>
 /* Components */
 import MovieContainer from "../components/views/movie/movieContainer.vue";
-import Cast from "../components/global/cast.vue";
+import Cast from "../components/reusables/cast.vue";
 import Footer from "../components/global/Footer.vue";
 import VideoContainer from "../components/reusables/VideoContainer.vue";
 /* Components */

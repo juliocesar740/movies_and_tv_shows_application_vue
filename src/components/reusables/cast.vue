@@ -11,7 +11,7 @@
         </div>
         <div class="cast-card__info">
           <p>{{ star.name }}</p>
-          <p style="font-size: 14.4px">{{ star.character }}</p>
+          <p>{{ star.character }}</p>
         </div>
       </div>
     </div>
@@ -61,7 +61,7 @@ const props = defineProps({
   /* border: 1px solid gold; */
   box-shadow: rgba(119, 123, 133, 0.25) 0px 4px 8px -2px,
     rgba(167, 171, 177, 0.08) 0px 0px 0px 1px;
-  width: 150px;
+  width: 175px;
   height: 285px;
   margin-left: 5px;
   display: flex;
@@ -73,7 +73,7 @@ const props = defineProps({
 }
 
 .cast-card__img {
-  width: 150px;
+  width: 175px;
   height: 200px;
 }
 
@@ -85,7 +85,7 @@ const props = defineProps({
 .cast-card__info {
   padding: 0 10px;
   padding-top: 5px;
-  font-size: 15px;
+  font-size: 14px;
   word-wrap: break-word;
 }
 </style>

@@ -16,7 +16,7 @@
 <script setup>
 /* Components */
 import TvShowContainer from "../components/views/tvShow/tvShowContainer.vue";
-import Cast from "../components/global/cast.vue";
+import Cast from "../components/reusables/cast.vue";
 import Footer from "../components/global/Footer.vue";
 import VideoContainer from "../components/reusables/VideoContainer.vue";
 import getTvShowData from "../composables/functions/api/getTvShowData.js";
