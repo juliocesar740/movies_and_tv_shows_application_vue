@@ -32,9 +32,38 @@
 </template>
 
 <script setup>
-// eslint-disable-next-line no-unused-vars
-const props = defineProps({
-  searchResults: Array,
+import getSearchData from "../../../composables/functions/api/getSearchData.js";
+import { ref } from "@vue/reactivity";
+import { onBeforeRouteUpdate, useRoute } from "vue-router";
+
+// route
+const route = useRoute();
+
+// Data
+const data = ref(null);
+data.value = await getSearchData(
+  route.params.type,
+  route.params.query,
+  route.params.page,
+  process.env.VUE_APP_KEY
+);
+
+const searchResults = ref([]);
+searchResults.value = data.value.results;
+
+const total_pages = ref(0);
+total_pages.value = data.value.total_pages;
+
+// Handles the new route
+onBeforeRouteUpdate(async (to) => {
+  data.value = await getSearchData(
+    to.params.type,
+    to.params.query,
+    to.params.page,
+    process.env.VUE_APP_KEY
+  );
+  searchResults.value = data.value.results;
+  total_pages.value = data.value.total_pages;
 });
 </script>
 
@@ -70,14 +99,16 @@ const props = defineProps({
   opacity: 0.5;
 }
 
-.result-card > img,
-.result-card > .img-icon-error {
+.result-card > img {
   width: 100%;
   height: 100%;
   border-radius: 13px;
 }
 
 .img-icon-error {
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
   position: relative;
   background-color: rgb(46, 59, 68);
   display: flex;

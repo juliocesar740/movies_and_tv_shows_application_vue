@@ -2,7 +2,7 @@
   <div class="navbar">
     <ul>
       <li>
-        <router-link :to="{ name: 'Home' }" class="link-route"
+        <router-link :to="{ name: 'home' }" class="link-route"
           >Home</router-link
         >
       </li>

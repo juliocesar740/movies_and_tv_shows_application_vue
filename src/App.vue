@@ -19,7 +19,7 @@
       </template>
 
       <!-- loading state -->
-      <template #fallback> {{ msgError }} </template>
+      <template #fallback>a</template>
     </Suspense>
   </div>
 </template>
@@ -35,7 +35,7 @@ const app = ref(null);
 // data
 const searchActive = ref(false);
 const searchDropwdownActive = ref(false);
-const msgError = ref("");
+// const msgError = ref("");
 
 // methods
 const handleApp = (e) => {
@@ -70,8 +70,8 @@ const searchDropdownInactive = () => {
   searchDropwdownActive.value = false;
 };
 
-onErrorCaptured(() => {
-  msgError.value = "Something went wrong!";
+onErrorCaptured((err) => {
+  console.log(err);
 });
 </script>
 

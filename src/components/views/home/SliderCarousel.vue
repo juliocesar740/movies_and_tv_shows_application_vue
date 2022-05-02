@@ -72,9 +72,7 @@ onUpdated(() => {
 
 .slider-carousel {
   position: relative;
-  z-index: 3;
-  height: 100%;
-  width: 100%;
+  z-index: 7;
   display: flex;
   flex-direction: row;
   transition: 250ms ease;
@@ -87,6 +85,7 @@ onUpdated(() => {
   display: flex;
   flex-direction: row;
   transition: 400ms ease;
+  height: 350px;
   width: 100%;
 }
 
@@ -104,7 +103,7 @@ onUpdated(() => {
 }
 
 .movie-poster {
-  width: 300px;
+  width: 250px;
   height: 100%;
 }
 
@@ -117,10 +116,12 @@ onUpdated(() => {
   position: relative;
   z-index: 15;
   background: rgb(50, 54, 58);
-  width: 430px;
+  width: 450px;
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   padding: 20px 15px;
   gap: 15px;
 }
@@ -149,38 +150,52 @@ onUpdated(() => {
 }
 
 .movie-info a {
-  position: absolute;
-  bottom: 20px;
+  margin-top: 20px;
 }
 
 /* Media Queries */
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 800px) {
+  .movie-carousel {
+    height: 400px;
+  }
   .movie-poster {
-    width: 400px;
+    width: 250px;
+  }
+  .movie-info {
+    width: 350px;
   }
   #overview {
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.5rem;
   }
-}
-@media screen and (max-width: 670px) {
-  .movie-info h1 {
-    font-size: 1.5rem;
-    margin-bottom: 18px;
+  .movie-info a {
+    margin-top: 15px;
   }
+}
+@media screen and (max-width: 720px) {
+  .movie-carousel {
+    height: 375px;
+  }
+  .movie-poster {
+    width: 200px;
+  }
+  .movie-info {
+    width: 300px;
+  }
+
+  .movie-info h1 {
+    font-size: 1.85rem;
+  }
+
   #overview {
-    font-size: 14px;
+    font-size: 16px;
   }
   .movie-info a {
-    position: initial;
-    width: 150px;
-    height: 40px;
-    font-size: 16px;
-    margin-top: 12.5px;
+    margin-top: 15px;
   }
 }
 
-@media screen and (max-width: 570px) {
+@media screen and (max-width: 605px) {
   .movie-info h1 {
     font-size: 1.2rem;
     margin-bottom: 5px;
@@ -190,39 +205,57 @@ onUpdated(() => {
   }
   .movie-info a {
     align-self: center;
-    position: initial;
     width: 150px;
     height: 40px;
     font-size: 16px;
     margin-top: 12.5px;
   }
   .movie-carousel {
+    height: 600px;
     flex-direction: column;
   }
   .movie-poster {
-    height: 275px;
+    height: 280px;
     width: 270px;
   }
   .movie-carousel,
   .movie-carousel-active {
-    margin-top: 20px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
   .movie-info {
+    height: 325px;
     width: 270px;
     padding: 15.75px 7.5px;
     gap: 7.5px;
   }
 }
 
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 400px) {
   .movie-poster {
-    height: 250px;
+    height: 300px;
+    width: calc(300px - 8.5%);
+  }
+  .movie-info {
+    width: calc(300px - 8.5%);
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .movie-poster {
+    width: calc(250px - 8.5%);
+  }
+  .movie-info {
+    width: calc(250px - 8.5%);
+  }
+}
+@media screen and (max-width: 320px) {
+  .movie-poster {
     width: 200px;
   }
   .movie-info {
+    height: 400px;
     width: 200px;
   }
 }

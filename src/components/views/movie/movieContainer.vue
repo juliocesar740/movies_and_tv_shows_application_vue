@@ -16,9 +16,22 @@
 </template>
 
 <script setup>
+import { ref } from "@vue/reactivity";
+import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import MovieInfo from "./MovieInfo.vue";
-// eslint-disable-next-line no-unused-vars
-const props = defineProps({ movie: Object });
+import getMovieData from "../../../composables/functions/api/getMovieData.js";
+
+//route
+const route = useRoute();
+
+// Data
+const movie = ref(null);
+movie.value = await getMovieData(route.params.id, process.env.VUE_APP_KEY);
+
+// Handles the new route
+onBeforeRouteUpdate(async (to) => {
+  movie.value = await getMovieData(to.params.id, process.env.VUE_APP_KEY);
+});
 </script>
 
 <style scoped>

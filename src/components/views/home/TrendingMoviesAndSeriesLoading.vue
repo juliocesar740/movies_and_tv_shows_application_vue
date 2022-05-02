@@ -1,27 +1,13 @@
 <template>
   <div class="trending-movies-series-container">
     <!-- Trending audio-visual media contents -->
-    <h1 style="margin-left: 25px">Trending</h1>
     <div class="trending-audio-visual-contents">
-      <TrendingAudioVisualContent
-        v-for="trending_audiovisual_content in trending_movies_and_series"
-        :key="trending_audiovisual_content.id"
-        :trending_audiovisual_content="trending_audiovisual_content"
-      />
+      <div class="skeleton-loading-card" v-for="i in 20" :key="i"></div>
     </div>
   </div>
 </template>
 
-<script setup>
-import TrendingAudioVisualContent from "./TrendingAudiovisualContent.vue";
-import getTrendingContent from "../../../composables/functions/api/getTrendingContent";
-
-// data
-// Get movies and series trending at the moment
-const trending_movies_and_series = await getTrendingContent(
-  process.env.VUE_APP_KEY
-);
-</script>
+<script setup></script>
 
 <style scoped>
 .trending-movies-series-container {
@@ -34,6 +20,14 @@ const trending_movies_and_series = await getTrendingContent(
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 15px;
   padding: 15px 10px;
+}
+
+.skeleton-loading-card {
+  border-radius: 13.5px;
+  width: 210px;
+  height: 290px;
+  justify-self: center;
+  background-color: rgb(76, 81, 85);
 }
 
 /* Media Queries */
@@ -51,11 +45,23 @@ const trending_movies_and_series = await getTrendingContent(
     grid-template-rows: repeat(auto-fit, minmax(150px, 1fr));
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
+  .skeleton-loading-card {
+    width: 160px;
+    height: 250px;
+  }
 }
+
 @media screen and (max-width: 410px) {
   .trending-audio-visual-contents {
     grid-template-rows: repeat(auto-fit, minmax(120px, 1fr));
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+}
+@media screen and (max-width: 400px) {
+  .skeleton-loading-card {
+    width: 120px;
+    height: 180px;
+    margin: 0;
   }
 }
 @media screen and (max-width: 330px) {
@@ -66,12 +72,18 @@ const trending_movies_and_series = await getTrendingContent(
     padding: 5px 15px;
   }
 }
+
 @media screen and (max-width: 310px) {
   .trending-audio-visual-contents {
     grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
     padding: 20px 15px;
+  }
+  .skeleton-loading-card {
+    width: 170px;
+    height: 250px;
+    margin: 0;
   }
 }
 </style>

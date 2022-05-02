@@ -7,7 +7,7 @@ const lazyLoad = (view) => {
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "home",
     component: lazyLoad("Home"),
   },
   {
@@ -44,7 +44,7 @@ const router = createRouter({
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({ left: 0, top: 0 });
-      }, 500);
+      }, 300);
     });
   },
 });

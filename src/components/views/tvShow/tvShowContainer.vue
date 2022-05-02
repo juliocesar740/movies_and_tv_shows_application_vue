@@ -19,9 +19,22 @@
 </template>
 
 <script setup>
+import { ref } from "@vue/reactivity";
+import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import TvShowInfo from "./TvShowInfo.vue";
-// eslint-disable-next-line no-unused-vars
-const props = defineProps({ tvShow: Object });
+import getTvShowData from "../../../composables/functions/api/getTvShowData.js";
+
+//route
+const route = useRoute();
+
+// Data
+const tvShow = ref(null);
+tvShow.value = await getTvShowData(route.params.id, process.env.VUE_APP_KEY);
+
+// Handles the new route
+onBeforeRouteUpdate(async (to) => {
+  tvShow.value = await getTvShowData(to.params.id, process.env.VUE_APP_KEY);
+});
 </script>
 
 <style scoped>

@@ -39,6 +39,9 @@ const { popularTvShows } = await getPopularTvShowsData(
 .popular-tv-shows__container {
   height: 360px;
   overflow-x: scroll;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  will-change: transform;
 }
 
 /* Scroller */

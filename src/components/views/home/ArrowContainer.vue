@@ -29,7 +29,8 @@ const emits = defineEmits(["leftArrowEvent", "rightArrowEvent"]);
 .arrow-left {
   position: absolute;
   left: -50px;
-  top: 175px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 3.05rem;
   cursor: pointer;
 }
@@ -37,54 +38,60 @@ const emits = defineEmits(["leftArrowEvent", "rightArrowEvent"]);
 .arrow-right {
   position: absolute;
   right: -50px;
-  top: 175px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 3.05rem;
   cursor: pointer;
 }
 
 /* Media Queries */
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 850px) {
   .arrow-left {
-    left: -3.5px;
+    left: -40px;
+    font-size: 2.95rem;
   }
   .arrow-right {
-    right: -3.5px;
-  }
-}
-
-@media screen and (max-width: 670px) {
-  .arrow-left,
-  .arrow-right {
-    top: 185px;
+    right: -40px;
+    font-size: 2.95rem;
   }
 }
 
 @media screen and (max-width: 570px) {
   .arrow-left {
-    top: 245px;
     font-size: 2.75rem;
   }
   .arrow-right {
-    top: 245px;
     font-size: 2.75rem;
   }
 }
 @media screen and (max-width: 425px) {
   .arrow-left {
+    left: -35px;
+  }
+  .arrow-right {
+    right: -35px;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .arrow-left {
+    left: -40.75px;
     font-size: 2.25rem;
   }
   .arrow-right {
+    right: -40.75px;
     font-size: 2.25rem;
   }
 }
-@media screen and (max-width: 300px) {
+
+@media screen and (max-width: 320px) {
   .arrow-left {
-    left: 7.5px;
+    left: -32px;
     font-size: 2rem;
   }
   .arrow-right {
-    right: 7.5px;
+    right: -32px;
     font-size: 2rem;
   }
 }

@@ -1,7 +1,16 @@
 <template>
   <div class="popular-tv-shows">
     <h1 style="text-align: center">Popular Tv Shows</h1>
-    <PopularTvShowsContainer :popularTvShows="popularTvShows" />
+    <Suspense>
+      <!-- Main Content -->
+      <template #default>
+        <PopularTvShowsContainer />
+      </template>
+      <!-- loading state -->
+      <template #fallback>
+        <PopularTvShowsContainerLoading />
+      </template>
+    </Suspense>
     <Pagination
       :route="{
         name: 'popularTvShows',
@@ -15,11 +24,12 @@
 
 <script setup>
 /* Components */
-import getPopularTvShowsData from "../composables/functions/api/getPopularTvShowsData.js";
 import PopularTvShowsContainer from "../components/views/popularTvShows/PopularTvShowsContainer.vue";
+import PopularTvShowsContainerLoading from "../components/views/popularTvShows/PopularTvShowsContainerLoading.vue";
 import Pagination from "../components/reusables/Pagination.vue";
 import Footer from "../components/global/Footer.vue";
-/* Components */
+
+import getPopularTvShowsData from "../composables/functions/api/getPopularTvShowsData.js";
 import { ref } from "@vue/reactivity";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
 
@@ -32,8 +42,7 @@ data.value = await getPopularTvShowsData(
   route.params.page,
   process.env.VUE_APP_KEY
 );
-const popularTvShows = ref([]);
-popularTvShows.value = data.value.popularTvShows;
+
 const total_pages = ref(0);
 total_pages.value = data.value.total_pages;
 
@@ -44,7 +53,6 @@ onBeforeRouteUpdate(async (to) => {
     process.env.VUE_APP_KEY
   );
   total_pages.value = data.value.total_pages;
-  popularTvShows.value = data.value.popularTvShows;
 });
 </script>
 

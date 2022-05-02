@@ -1,9 +1,36 @@
 <template>
   <div class="home-page" @click="handleApp">
     <CarouselContainer :cancelCarousel="cancelCarousel" />
-    <TrendingMoviesAndSeries />
-    <PopularMovies />
-    <PopularTvShows />
+
+    <Suspense>
+      <!-- Main Content -->
+      <template #default>
+        <TrendingMoviesAndSeries />
+      </template>
+
+      <!-- loading state -->
+      <template #fallback> <TrendingMoviesAndSeriesLoading /> </template>
+    </Suspense>
+
+    <Suspense>
+      <!-- Main Content -->
+      <template #default>
+        <PopularMovies />
+      </template>
+
+      <!-- loading state -->
+      <template #fallback> <PopularMoviesLoading /> </template>
+    </Suspense>
+
+    <Suspense>
+      <!-- Main Content -->
+      <template #default>
+        <PopularTvShows />
+      </template>
+
+      <!-- loading state -->
+      <template #fallback> <PopularTvShowsLoading /> </template>
+    </Suspense>
     <Footer />
   </div>
 </template>
@@ -11,8 +38,11 @@
 <script setup>
 import CarouselContainer from "../components/views/home/CarouselContainer.vue";
 import TrendingMoviesAndSeries from "../components/views/home/TrendingMoviesAndSeries.vue";
+import TrendingMoviesAndSeriesLoading from "../components/views/home/TrendingMoviesAndSeriesLoading.vue";
 import PopularMovies from "../components/views/home/PopularMovies.vue";
+import PopularMoviesLoading from "../components/views/home/PopularMoviesLoading.vue";
 import PopularTvShows from "../components/views/home/PopularTvShows.vue";
+import PopularTvShowsLoading from "../components/views/home/PopularTvShowsLoading.vue";
 import Footer from "../components/global/Footer.vue";
 import { ref } from "@vue/reactivity";
 import { onBeforeRouteLeave, onBeforeRouteUpdate } from "vue-router";

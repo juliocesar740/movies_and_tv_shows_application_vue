@@ -1,7 +1,7 @@
 <template>
   <div class="popular-movies">
     <div class="flex-row" style="margin-top: 12.5px">
-      <h2 style="margin-left: 5px">Movies Popular</h2>
+      <h2 style="margin-left: 5px">Popular Movies</h2>
       <router-link
         :to="{ name: 'popularMovies', params: { page: 1 } }"
         class="btn-discover"
@@ -39,6 +39,9 @@ const { popularMovies } = await getPopularMoviesData(
 .popular-movies__container {
   height: 360px;
   overflow-x: scroll;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  will-change: transform;
 }
 
 /* Scroller */

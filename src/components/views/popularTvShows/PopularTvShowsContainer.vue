@@ -10,7 +10,15 @@
           'https://image.tmdb.org/t/p/original/' + popularTvShow.poster_path
         "
         alt=""
+        v-if="popularTvShow.poster_path"
       />
+      <div class="img-icon-error" v-else>
+        <div class="img-icon-error__container">
+          <i class="fas fa-camera" id="icon-camera"></i>
+          <i id="line"></i>
+          <span id="error-text">Image not found</span>
+        </div>
+      </div>
       <div class="popular-tv-show__info">
         <p>
           {{ popularTvShow.name }}
@@ -30,9 +38,31 @@
 </template>
 
 <script setup>
-// eslint-disable-next-line no-unused-vars
-const props = defineProps({
-  popularTvShows: Array,
+import getPopularTvShowsData from "../../../composables/functions/api/getPopularTvShowsData.js";
+import { ref } from "@vue/reactivity";
+import { onBeforeRouteUpdate, useRoute } from "vue-router";
+// route
+const route = useRoute();
+
+// Data
+const data = ref(null);
+data.value = await getPopularTvShowsData(
+  route.params.page,
+  process.env.VUE_APP_KEY
+);
+const popularTvShows = ref([]);
+popularTvShows.value = data.value.popularTvShows;
+const total_pages = ref(0);
+total_pages.value = data.value.total_pages;
+
+// Handles the new route
+onBeforeRouteUpdate(async (to) => {
+  data.value = await getPopularTvShowsData(
+    to.params.page,
+    process.env.VUE_APP_KEY
+  );
+  total_pages.value = data.value.total_pages;
+  popularTvShows.value = data.value.popularTvShows;
 });
 </script>
 
@@ -63,6 +93,63 @@ const props = defineProps({
   transform: translateX(0px);
 }
 
+.popular-tv-show:hover .img-icon-error,
+.popular-tv-show:hover img {
+  opacity: 0.5;
+}
+
+.img-icon-error {
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
+  position: relative;
+  background-color: rgb(46, 59, 68);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-icon-error > * {
+  color: rgb(164, 187, 199);
+}
+
+#icon-camera {
+  position: relative;
+  font-size: 3.5rem;
+  font-weight: 600;
+}
+
+#line::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 49px;
+  top: 144px;
+  width: 103px;
+  transform: rotate(45deg);
+  border: 4px solid rgb(164, 187, 199);
+  background-color: rgb(164, 187, 199);
+}
+
+#error-text {
+  position: absolute;
+  bottom: 35px;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.img-icon-error__container {
+  width: 7.25rem;
+  height: 7.25rem;
+  border: 7px solid rgb(164, 187, 199);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .popular-tv-show__info {
   position: absolute;
   top: 0;
@@ -83,10 +170,6 @@ const props = defineProps({
   font-weight: 600;
   cursor: pointer;
   transition: 200ms ease;
-}
-
-.popular-tv-show:hover img {
-  opacity: 0.5;
 }
 
 .popular-tv-show > img {

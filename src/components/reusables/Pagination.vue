@@ -92,4 +92,7 @@ const getNextPage = () => {
 .page-highlight {
   background-color: rgb(105, 115, 117);
 }
+.prev-page {
+  width: 100px;
+}
 </style>

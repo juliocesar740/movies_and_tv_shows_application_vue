@@ -1,7 +1,29 @@
 <template>
   <div class="movie" v-show="movie">
-    <MovieContainer :movie="movie" @toggle-btn-watch="toggleBtnWatch" />
-    <Cast :cast="cast" />
+    <Suspense>
+      <!-- Main Content -->
+      <template #default>
+        <MovieContainer @toggle-btn-watch="toggleBtnWatch" />
+      </template>
+
+      <!-- loading state -->
+      <template #fallback>
+        <MovieContainerLoading />
+      </template>
+    </Suspense>
+
+    <Suspense>
+      <!-- Main Content -->
+      <template #default>
+        <Cast />
+      </template>
+
+      <!-- loading state -->
+      <template #fallback>
+        <CastLoading />
+      </template>
+    </Suspense>
+
     <Footer />
     <VideoContainer
       ref="video_container"
@@ -16,10 +38,12 @@
 <script setup>
 /* Components */
 import MovieContainer from "../components/views/movie/movieContainer.vue";
-import Cast from "../components/reusables/cast.vue";
+import MovieContainerLoading from "../components/views/movie/MovieContainerLoading.vue";
+import Cast from "../components/reusables/Cast.vue";
+import CastLoading from "../components/reusables/CastLoading.vue";
 import Footer from "../components/global/Footer.vue";
 import VideoContainer from "../components/reusables/VideoContainer.vue";
-/* Components */
+
 import getMovieData from "../composables/functions/api/getMovieData.js";
 import getMovieCast from "../composables/functions/api/getMovieCast.js";
 import getMovieTrailer from "../composables/functions/api/getMovieTrailer.js";
@@ -34,13 +58,16 @@ const video_container = ref(null);
 // Data
 const movie = ref(null);
 movie.value = await getMovieData(route.params.id, process.env.VUE_APP_KEY);
+
 const cast = ref([]);
 cast.value = await getMovieCast(movie.value.id, process.env.VUE_APP_KEY);
+
 const official_trailer_id = ref("");
 official_trailer_id.value = await getMovieTrailer(
   movie.value.id,
   process.env.VUE_APP_KEY
 );
+
 const trailer = ref(null);
 const backgroundUnfocused = ref(null);
 

@@ -8,7 +8,15 @@
       <img
         :src="'https://image.tmdb.org/t/p/original/' + popularMovie.poster_path"
         alt=""
+        v-if="popularMovie.poster_path"
       />
+      <div class="img-icon-error" v-else>
+        <div class="img-icon-error__container">
+          <i class="fas fa-camera" id="icon-camera"></i>
+          <i id="line"></i>
+          <span id="error-text">Image not found</span>
+        </div>
+      </div>
       <div class="popular-movie__info">
         <p>
           {{ popularMovie.title }}
@@ -28,9 +36,33 @@
 </template>
 
 <script setup>
-// eslint-disable-next-line no-unused-vars
-const props = defineProps({
-  popularMovies: Array,
+import getPopularMoviesData from "../../../composables/functions/api/getPopularMoviesData";
+import { ref } from "@vue/reactivity";
+import { onBeforeRouteUpdate, useRoute } from "vue-router";
+
+// route
+const route = useRoute();
+
+// Data
+const data = ref(null);
+data.value = await getPopularMoviesData(
+  route.params.page,
+  process.env.VUE_APP_KEY
+);
+
+const popularMovies = ref([]);
+popularMovies.value = data.value.popularMovies;
+const total_pages = ref(0);
+total_pages.value = data.value.total_pages;
+
+// Handles the new route
+onBeforeRouteUpdate(async (to) => {
+  data.value = await getPopularMoviesData(
+    to.params.page,
+    process.env.VUE_APP_KEY
+  );
+  total_pages.value = data.value.total_pages;
+  popularMovies.value = data.value.popularMovies;
 });
 </script>
 
@@ -61,6 +93,63 @@ const props = defineProps({
   transform: translateX(0px);
 }
 
+.popular-movie:hover .img-icon-error,
+.popular-movie:hover img {
+  opacity: 0.5;
+}
+
+.img-icon-error {
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
+  position: relative;
+  background-color: rgb(68, 54, 46);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-icon-error > * {
+  color: rgb(164, 187, 199);
+}
+
+#icon-camera {
+  position: relative;
+  font-size: 3.5rem;
+  font-weight: 600;
+}
+
+#line::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 49px;
+  top: 144px;
+  width: 103px;
+  transform: rotate(45deg);
+  border: 4px solid rgb(164, 187, 199);
+  background-color: rgb(164, 187, 199);
+}
+
+#error-text {
+  position: absolute;
+  bottom: 35px;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.img-icon-error__container {
+  width: 7.25rem;
+  height: 7.25rem;
+  border: 7px solid rgb(164, 187, 199);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .popular-movie__info {
   position: absolute;
   top: 0;
@@ -81,10 +170,6 @@ const props = defineProps({
   font-weight: 600;
   cursor: pointer;
   transition: 200ms ease;
-}
-
-.popular-movie:hover img {
-  opacity: 0.5;
 }
 
 .popular-movie > img {

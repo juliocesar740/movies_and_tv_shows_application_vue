@@ -1,7 +1,29 @@
 <template>
-  <div class="tvShow" v-show="tvShow">
-    <TvShowContainer :tvShow="tvShow" @toggle-btn-watch="toggleBtnWatch" />
-    <Cast :cast="cast" />
+  <div class="tvShow">
+    <Suspense>
+      <!-- Main Content -->
+      <template #default>
+        <TvShowContainer @toggle-btn-watch="toggleBtnWatch" />
+      </template>
+
+      <!-- loading state -->
+      <template #fallback>
+        <TvShowContainerLoading />
+      </template>
+    </Suspense>
+
+    <Suspense>
+      <!-- Main Content -->
+      <template #default>
+        <Cast />
+      </template>
+
+      <!-- loading state -->
+      <template #fallback>
+        <CastLoading />
+      </template>
+    </Suspense>
+
     <Footer />
     <VideoContainer
       ref="video_container"
@@ -16,30 +38,25 @@
 <script setup>
 /* Components */
 import TvShowContainer from "../components/views/tvShow/tvShowContainer.vue";
-import Cast from "../components/reusables/cast.vue";
+import TvShowContainerLoading from "../components/views/tvShow/TvShowContainerLoading.vue";
+import Cast from "../components/reusables/Cast.vue";
+import CastLoading from "../components/reusables/CastLoading.vue";
 import Footer from "../components/global/Footer.vue";
 import VideoContainer from "../components/reusables/VideoContainer.vue";
-import getTvShowData from "../composables/functions/api/getTvShowData.js";
-import getTvShowCast from "../composables/functions/api/getTvShowCast.js";
 import getTvShowTrailer from "../composables/functions/api/getTvShowTrailer.js";
 /* Components */
 import { ref } from "@vue/reactivity";
-import { onBeforeRouteUpdate, useRoute } from "vue-router";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
 
-// route
+//route
 const route = useRoute();
 
 // template refs
 const video_container = ref(null);
 
-// Data
-const tvShow = ref(null);
-tvShow.value = await getTvShowData(route.params.id, process.env.VUE_APP_KEY);
-const cast = ref([]);
-cast.value = await getTvShowCast(tvShow.value.id, process.env.VUE_APP_KEY);
 const official_trailer_id = ref("");
 official_trailer_id.value = await getTvShowTrailer(
-  tvShow.value.id,
+  route.params.id,
   process.env.VUE_APP_KEY
 );
 const trailer = ref(null);
@@ -54,8 +71,6 @@ const toggleBtnWatch = () => {
 
 // Handles the new route
 onBeforeRouteUpdate(async (to) => {
-  tvShow.value = await getTvShowData(to.params.id, process.env.VUE_APP_KEY);
-  cast.value = await getTvShowCast(to.params.id, process.env.VUE_APP_KEY);
   official_trailer_id.value = await getTvShowTrailer(
     to.params.id,
     process.env.VUE_APP_KEY

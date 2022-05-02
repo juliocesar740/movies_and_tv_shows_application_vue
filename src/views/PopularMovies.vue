@@ -1,7 +1,15 @@
 <template>
   <div class="popular-movies">
     <h1 style="text-align: center">Popular Movies</h1>
-    <PopularMoviesContainer :popularMovies="popularMovies" />
+    <Suspense>
+      <!-- Main Content -->
+      <template #default>
+        <PopularMoviesContainer />
+      </template>
+
+      <!-- loading state -->
+      <template #fallback> <PopularMoviesContainerLoading /> </template>
+    </Suspense>
     <Pagination
       :route="{
         name: 'popularMovies',
@@ -9,14 +17,16 @@
       :total_pages="total_pages"
     />
     <br />
-    <Footer />
   </div>
+
+  <Footer />
 </template>
 
 <script setup>
 /* Components */
-import getPopularMoviesData from "../composables/functions/api/getPopularMoviesData.js";
+import getPopularMoviesData from "../composables/functions/api/getPopularMoviesData";
 import PopularMoviesContainer from "../components/views/popularMovies/PopularMoviesContainer.vue";
+import PopularMoviesContainerLoading from "../components/views/popularMovies/PopularMoviesContainerLoading.vue";
 import Pagination from "../components/reusables/Pagination.vue";
 import Footer from "../components/global/Footer.vue";
 /* Components */
@@ -33,8 +43,7 @@ data.value = await getPopularMoviesData(
   route.params.page,
   process.env.VUE_APP_KEY
 );
-const popularMovies = ref([]);
-popularMovies.value = data.value.popularMovies;
+
 const total_pages = ref(0);
 total_pages.value = data.value.total_pages;
 
@@ -45,7 +54,6 @@ onBeforeRouteUpdate(async (to) => {
     process.env.VUE_APP_KEY
   );
   total_pages.value = data.value.total_pages;
-  popularMovies.value = data.value.popularMovies;
 });
 </script>
 

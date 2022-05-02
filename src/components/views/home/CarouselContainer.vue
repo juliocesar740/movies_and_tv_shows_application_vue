@@ -1,16 +1,30 @@
 <template>
-  <div class="carousel-cointainer">
-    <!-- slide-carousel -->
-    <div class="slider-carousel-container">
-      <SliderCarousel :position="position" ref="carousel_component" />
-    </div>
-    <div class="slider-arrow">
-      <ArrowContainer
-        @right-arrow-event="handleArrowEvent"
-        @left-arrow-event="handleArrowEvent"
-      />
-    </div>
-  </div>
+  <Suspense>
+    <!-- Main Content -->
+    <template #default>
+      <div class="carousel-cointainer">
+        <!-- slide-carousel -->
+        <div class="slider-carousel-container">
+          <SliderCarousel :position="position" ref="carousel_component" />
+          <div class="slider-arrow">
+            <ArrowContainer
+              @right-arrow-event="handleArrowEvent"
+              @left-arrow-event="handleArrowEvent"
+            />
+          </div>
+        </div>
+      </div>
+    </template>
+    <!-- loading state -->
+    <template #fallback>
+      <div class="carousel-cointainer">
+        <div class="slider-carousel-container">
+          <!-- slide-carousel -->
+          <SliderCarouselLoading />
+        </div>
+      </div>
+    </template>
+  </Suspense>
 </template>
 
 <script setup>
@@ -19,6 +33,7 @@ import ArrowContainer from "./ArrowContainer.vue";
 import { ref } from "@vue/reactivity";
 import { onMounted, onUpdated } from "@vue/runtime-core";
 import handleArrow from "../../../composables/functions/components/handleArrow";
+import SliderCarouselLoading from "./SliderCarouselLoading.vue";
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({ cancelCarousel: Boolean });
@@ -76,7 +91,7 @@ onUpdated(() => {
 <style scoped>
 .carousel-cointainer {
   position: relative;
-  max-height: 400;
+  height: 350px;
   overflow: visible;
   display: flex;
   flex-direction: row;
@@ -85,64 +100,74 @@ onUpdated(() => {
 }
 .slider-carousel-container {
   height: 100%;
-  width: 600px;
+  width: 700px;
 }
 
 .slider-arrow {
-  /* border: 1px solid red; */
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
+  width: 700px;
   max-width: 100%;
   height: 100%;
 }
 
 /* Media Queries */
-@media screen and (max-width: 750px) {
-  .slider-carousel-container {
+@media screen and (max-width: 800px) {
+  .carousel-cointainer {
+    height: 400px;
+  }
+  .slider-carousel-container,
+  .slider-arrow {
+    width: 600px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .carousel-cointainer {
+    height: 375px;
+  }
+  .slider-carousel-container,
+  .slider-arrow {
     width: 500px;
   }
-  .slider-arrow {
-    width: 580px;
-  }
 }
 
-@media screen and (max-width: 670px) {
-  .slider-carousel-container {
-    width: 450px;
-  }
-  .slider-arrow {
-    width: 530px;
-  }
-}
-
-@media screen and (max-width: 570px) {
+@media screen and (max-width: 605px) {
   .carousel-cointainer {
     position: relative;
-    height: 490px;
+    height: 600px;
   }
   .slider-carousel-container {
-    width: 270px;
+    width: 300px;
   }
   .slider-arrow {
-    width: 375px;
-    transform: translate(-50%, 10px);
+    width: 300px;
   }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 400px) {
+  .slider-carousel-container {
+    width: calc(320px - 8.5%);
+  }
   .slider-arrow {
-    width: calc(370px - 11.5%);
+    width: calc(320px - 8.5%);
   }
 }
 
-@media screen and (max-width: 360px) {
-  .slider-arrow {
-    width: calc(300px - 8.5%);
-  }
+@media screen and (max-width: 370px) {
   .slider-carousel-container {
+    width: calc(250px - 8.5%);
+  }
+  .slider-arrow {
+    width: calc(250px - 8.5%);
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .slider-carousel-container {
+    width: 200px;
+  }
+  .slider-arrow {
     width: 200px;
   }
 }

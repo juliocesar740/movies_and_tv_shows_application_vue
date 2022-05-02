@@ -1,6 +1,15 @@
 <template>
   <div class="search-view">
-    <SearchContainer :searchResults="searchResults" />
+    <Suspense>
+      <!-- Main Content -->
+      <template #default>
+        <SearchContainer />
+      </template>
+      <!-- loading state -->
+      <template #fallback>
+        <SearchContainerLoading />
+      </template>
+    </Suspense>
     <Pagination
       :route="{
         name: 'search',
@@ -17,6 +26,7 @@
 <script setup>
 import getSearchData from "../composables/functions/api/getSearchData.js";
 import SearchContainer from "../components/views/search/SearchContainer.vue";
+import SearchContainerLoading from "../components/views/search/SearchContainerLoading.vue";
 import Pagination from "../components/reusables/Pagination.vue";
 import Footer from "../components/global/Footer.vue";
 import { ref } from "@vue/reactivity";
@@ -33,8 +43,7 @@ data.value = await getSearchData(
   route.params.page,
   process.env.VUE_APP_KEY
 );
-const searchResults = ref([]);
-searchResults.value = data.value.results;
+
 const total_pages = ref(0);
 total_pages.value = data.value.total_pages;
 
@@ -46,7 +55,6 @@ onBeforeRouteUpdate(async (to) => {
     to.params.page,
     process.env.VUE_APP_KEY
   );
-  searchResults.value = data.value.results;
   total_pages.value = data.value.total_pages;
 });
 </script>

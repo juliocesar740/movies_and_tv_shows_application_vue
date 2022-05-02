@@ -19,9 +19,55 @@
 </template>
 
 <script setup>
-// eslint-disable-next-line no-unused-vars
-const props = defineProps({
-  cast: { type: Object, required: true },
+import { ref } from "@vue/reactivity";
+import { onBeforeRouteUpdate, useRoute } from "vue-router";
+
+import getMovieData from "../../composables/functions/api/getMovieData.js";
+import getMovieCast from "../../composables/functions/api/getMovieCast.js";
+import getTvShowData from "../../composables/functions/api/getTvShowData.js";
+import getTvShowCast from "../../composables/functions/api/getTvShowCast.js";
+
+//route
+const route = useRoute();
+
+// type
+const type = route.fullPath.split("/")[1];
+const cast = ref([]);
+
+if (type === "movie") {
+  // data
+  const movie = ref(null);
+  movie.value = await getMovieData(route.params.id, process.env.VUE_APP_KEY);
+
+  cast.value = await getMovieCast(movie.value.id, process.env.VUE_APP_KEY);
+} 
+else if (type === "tvShow") {
+  // data
+  const tv = ref(null);
+  tv.value = await getTvShowData(route.params.id, process.env.VUE_APP_KEY);
+  cast.value = await getTvShowCast(tv.value.id, process.env.VUE_APP_KEY);
+}
+
+// Handles the new route
+onBeforeRouteUpdate(async (to) => {
+  // type
+  const type = to.fullPath.split("/")[1];
+
+  if (type === "movie") {
+    // data
+    const movie = ref(null);
+    movie.value = await getMovieData(to.params.id, process.env.VUE_APP_KEY);
+
+    const cast = ref([]);
+    cast.value = await getMovieCast(movie.value.id, process.env.VUE_APP_KEY);
+  } else if (type === "tvShow") {
+    // data
+    const tv = ref(null);
+    tv.value = await getTvShowData(to.params.id, process.env.VUE_APP_KEY);
+
+    const cast = ref([]);
+    cast.value = await getTvShowCast(tv.value.id, process.env.VUE_APP_KEY);
+  }
 });
 </script>
 
@@ -47,7 +93,7 @@ const props = defineProps({
 /* Scroller */
 .cast-container::-webkit-scrollbar {
   width: 2.75px;
-  height: 10.5px;
+  height: 8px;
 }
 
 /* Scroller handle */
