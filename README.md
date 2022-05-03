@@ -1,24 +1,13 @@
-# movies-application-vue
+# Movies and tv shows application vue
 
-## Project setup
-```
+An application that uses the https://www.themoviedb.org/ api
+
+Application -> https://stalwart-banoffee-670d5f.netlify.app
+
+## Installation
+Install the dependencies and devDependencies and start the server.
+
+```sh
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
