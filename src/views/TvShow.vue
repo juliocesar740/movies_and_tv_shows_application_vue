@@ -15,7 +15,7 @@
     <Suspense>
       <!-- Main Content -->
       <template #default>
-        <CastLoading />
+        <Cast />
       </template>
 
       <!-- loading state -->
@@ -39,7 +39,7 @@
 /* Components */
 import TvShowContainer from "../components/views/tvShow/tvShowContainer.vue";
 import TvShowContainerLoading from "../components/views/tvShow/TvShowContainerLoading.vue";
-// import Cast from "../components/reusables/Cast.vue";
+import Cast from "../components/reusables/Cast.vue";
 import CastLoading from "../components/reusables/CastLoading.vue";
 import Footer from "../components/global/Footer.vue";
 import VideoContainer from "../components/reusables/VideoContainer.vue";
