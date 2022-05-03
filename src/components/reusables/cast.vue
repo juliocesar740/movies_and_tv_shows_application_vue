@@ -21,7 +21,6 @@
 <script setup>
 import { ref } from "@vue/reactivity";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
-
 import getMovieData from "../../composables/functions/api/getMovieData.js";
 import getMovieCast from "../../composables/functions/api/getMovieCast.js";
 import getTvShowData from "../../composables/functions/api/getTvShowData.js";

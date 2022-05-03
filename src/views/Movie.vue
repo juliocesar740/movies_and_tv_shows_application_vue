@@ -1,5 +1,5 @@
 <template>
-  <div class="movie" v-show="movie">
+  <div class="movie">
     <Suspense>
       <!-- Main Content -->
       <template #default>
@@ -43,7 +43,6 @@ import Cast from "../components/reusables/Cast.vue";
 import CastLoading from "../components/reusables/CastLoading.vue";
 import Footer from "../components/global/Footer.vue";
 import VideoContainer from "../components/reusables/VideoContainer.vue";
-import getMovieData from "../composables/functions/api/getMovieData.js";
 import getMovieTrailer from "../composables/functions/api/getMovieTrailer.js";
 import { ref } from "@vue/reactivity";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
@@ -53,13 +52,10 @@ const route = useRoute();
 // template refs
 const video_container = ref(null);
 
-// Data
-const movie = ref(null);
-movie.value = await getMovieData(route.params.id, process.env.VUE_APP_KEY);
-
+// get trailer
 const official_trailer_id = ref("");
 official_trailer_id.value = await getMovieTrailer(
-  movie.value.id,
+  route.params.id,
   process.env.VUE_APP_KEY
 );
 
@@ -76,7 +72,6 @@ const toggleBtnWatch = () => {
 
 // Handles the new route
 onBeforeRouteUpdate(async (to) => {
-  movie.value = await getMovieData(to.params.id, process.env.VUE_APP_KEY);
   official_trailer_id.value = await getMovieTrailer(
     to.params.id,
     process.env.VUE_APP_KEY
