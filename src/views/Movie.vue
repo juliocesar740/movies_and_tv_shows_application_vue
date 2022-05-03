@@ -43,9 +43,7 @@ import Cast from "../components/reusables/Cast.vue";
 import CastLoading from "../components/reusables/CastLoading.vue";
 import Footer from "../components/global/Footer.vue";
 import VideoContainer from "../components/reusables/VideoContainer.vue";
-
 import getMovieData from "../composables/functions/api/getMovieData.js";
-import getMovieCast from "../composables/functions/api/getMovieCast.js";
 import getMovieTrailer from "../composables/functions/api/getMovieTrailer.js";
 import { ref } from "@vue/reactivity";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
@@ -58,9 +56,6 @@ const video_container = ref(null);
 // Data
 const movie = ref(null);
 movie.value = await getMovieData(route.params.id, process.env.VUE_APP_KEY);
-
-const cast = ref([]);
-cast.value = await getMovieCast(movie.value.id, process.env.VUE_APP_KEY);
 
 const official_trailer_id = ref("");
 official_trailer_id.value = await getMovieTrailer(
@@ -82,7 +77,6 @@ const toggleBtnWatch = () => {
 // Handles the new route
 onBeforeRouteUpdate(async (to) => {
   movie.value = await getMovieData(to.params.id, process.env.VUE_APP_KEY);
-  cast.value = await getMovieCast(to.params.id, process.env.VUE_APP_KEY);
   official_trailer_id.value = await getMovieTrailer(
     to.params.id,
     process.env.VUE_APP_KEY

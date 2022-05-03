@@ -40,8 +40,7 @@ if (type === "movie") {
   movie.value = await getMovieData(route.params.id, process.env.VUE_APP_KEY);
 
   cast.value = await getMovieCast(movie.value.id, process.env.VUE_APP_KEY);
-} 
-else if (type === "tvShow") {
+} else if (type === "tvShow") {
   // data
   const tv = ref(null);
   tv.value = await getTvShowData(route.params.id, process.env.VUE_APP_KEY);

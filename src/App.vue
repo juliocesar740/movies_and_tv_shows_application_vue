@@ -19,7 +19,7 @@
       </template>
 
       <!-- loading state -->
-      <template #fallback>a</template>
+      <template #fallback>Loading...</template>
     </Suspense>
   </div>
 </template>
