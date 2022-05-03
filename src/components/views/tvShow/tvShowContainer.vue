@@ -30,6 +30,7 @@ const route = useRoute();
 // Data
 const tvShow = ref(null);
 tvShow.value = await getTvShowData(route.params.id, process.env.VUE_APP_KEY);
+document.title = tvShow.value.name;
 
 // Handles the new route
 onBeforeRouteUpdate(async (to) => {

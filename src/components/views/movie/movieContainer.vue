@@ -27,6 +27,7 @@ const route = useRoute();
 // Data
 const movie = ref(null);
 movie.value = await getMovieData(route.params.id, process.env.VUE_APP_KEY);
+document.title = movie.value.title;
 
 // Handles the new route
 onBeforeRouteUpdate(async (to) => {

@@ -36,6 +36,7 @@ import { onBeforeRouteUpdate, useRoute } from "vue-router";
 
 // route
 const route = useRoute();
+document.title = route.meta.title;
 
 // Data
 const data = ref(null);

@@ -9,31 +9,37 @@ const routes = [
     path: "/",
     name: "home",
     component: lazyLoad("Home"),
+    meta: { title: "Home" },
   },
   {
     path: "/movie/:id",
     name: "movie",
     component: lazyLoad("Movie"),
+    meta: { title: "Movie" },
   },
   {
     path: "/tvShow/:id",
     name: "tv",
     component: lazyLoad("TvShow"),
+    meta: { title: "TvShow" },
   },
   {
     path: "/popularMovies/:page",
     name: "popularMovies",
     component: lazyLoad("PopularMovies"),
+    meta: { title: "Popular Movies" },
   },
   {
     path: "/popularTvShows/:page",
     name: "popularTvShows",
     component: lazyLoad("PopularTvShows"),
+    meta: { title: "Popular Tv Shows" },
   },
   {
     path: "/search/:type/:query/:page",
     name: "search",
     component: lazyLoad("Search"),
+    meta: { title: "Search" },
   },
 ];
 

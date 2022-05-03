@@ -45,10 +45,14 @@ import PopularTvShows from "../components/views/home/PopularTvShows.vue";
 import PopularTvShowsLoading from "../components/views/home/PopularTvShowsLoading.vue";
 import Footer from "../components/global/Footer.vue";
 import { ref } from "@vue/reactivity";
-import { onBeforeRouteLeave, onBeforeRouteUpdate } from "vue-router";
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
 
 // Data
 const cancelCarousel = ref(null);
+
+// route
+const route = useRoute();
+document.title = route.meta.title;
 
 // start the carousel loop
 onBeforeRouteUpdate(() => {
