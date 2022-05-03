@@ -26,7 +26,6 @@
 
 <script setup>
 import { ref } from "@vue/reactivity";
-import { onErrorCaptured } from "@vue/runtime-core";
 import Navbar from "./components/global/Navbar.vue";
 import SearchDropdown from "./components/global/SearchDropdown.vue";
 
@@ -69,10 +68,6 @@ const searchDropdownActive = () => {
 const searchDropdownInactive = () => {
   searchDropwdownActive.value = false;
 };
-
-onErrorCaptured((err) => {
-  console.log(err);
-});
 </script>
 
 <style>
