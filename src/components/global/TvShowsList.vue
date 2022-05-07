@@ -27,11 +27,11 @@
         font-size: 1.175rem;
         word-wrap: break;
         padding: 5px 8.5px;
+        border-top: 1px solid rgb(182, 187, 189);
       "
-      class="result-not-found"
     >
       <i
-        class="fa-solid fa-circle-exclamation result-not-found"
+        class="fa-solid fa-circle-exclamation"
         style="color: rgb(223, 96, 78); padding-right: 5px"
       ></i>
       Nothing Found
@@ -60,11 +60,14 @@ const emits = defineEmits(["handleResult"]);
 <style scoped>
 .tv-shows-list {
   line-height: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 .tv-shows-list__results {
   display: inline-block;
   width: 100%;
-  padding: 8.5px;
+  padding: 15px 20px;
+  border-top: 1px solid rgb(182, 187, 189);
 }
 
 .tv-shows-list__results:hover {

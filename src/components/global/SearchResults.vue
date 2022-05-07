@@ -30,7 +30,7 @@ const emits = defineEmits(["handleResult"]);
 
 // Functions
 
-// change the component's layout
+// change the component's layout according to the number of movie and tv shows matched
 const getSearchClasses = computed(() => {
   const movies =
     JSON.parse(JSON.stringify(props.moviesSearchData)).results ?? null;
@@ -54,7 +54,7 @@ const getSearchClasses = computed(() => {
 
 <style scoped>
 .seach__list-top {
-  border: 5px solid rgb(142, 160, 160);
+  /* border: 3px solid rgb(142, 160, 160); */
   border-radius: 7.5px;
   position: absolute;
   right: calc(50px - 18.5%);
@@ -62,8 +62,6 @@ const getSearchClasses = computed(() => {
   z-index: 15;
   width: 600px;
   background-color: rgb(51, 59, 59);
-  display: flex;
-  flex-direction: column;
 }
 
 .seach__list-top-overflow {
@@ -73,7 +71,7 @@ const getSearchClasses = computed(() => {
 
 /* Scroller width */
 .seach__list-top-overflow::-webkit-scrollbar {
-  width: 10.75px;
+  width: 8px;
 }
 
 /* Scroller handle */

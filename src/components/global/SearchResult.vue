@@ -58,17 +58,28 @@ const emits = defineEmits(["handleResult"]);
 
 <style scoped>
 .result-list {
-  height: 200px;
+  height: 225px;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 15px;
+  padding: 15px 20px;
+  border-top: 1px solid rgb(182, 187, 189);
+  border-bottom: 1px solid rgb(182, 187, 189);
+}
+
+.result-list:last-of-type {
+  border-bottom: none;
 }
 
 .result-list__image,
 .result-list__image > img {
   height: 100%;
   width: 150px;
+}
+
+.result-list__image > img {
+  border-radius: 7.5px;
 }
 
 .result-list:hover {

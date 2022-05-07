@@ -29,11 +29,11 @@
         font-size: 1.175rem;
         word-wrap: break;
         padding: 5px 8.5px;
+        border-top: 1px solid rgb(182, 187, 189);
       "
-      class="result-not-found"
     >
       <i
-        class="fa-solid fa-circle-exclamation result-not-found"
+        class="fa-solid fa-circle-exclamation"
         style="color: rgb(223, 96, 78); padding-right: 5px"
       ></i>
       Nothing Found
@@ -60,12 +60,15 @@ const emits = defineEmits(["handleResult"]);
 
 <style scoped>
 .movies-list {
+  width: 100%;
   line-height: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 .movies-list__results {
   display: inline-block;
   width: 100%;
-  padding: 8.5px;
+  padding: 15px 20px;
 }
 
 .movies-list__results:hover {
